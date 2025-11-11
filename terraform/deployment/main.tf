@@ -29,7 +29,7 @@ module "ecs" {
   source = "../modules/ecs"
 
   name                 = var.name[*]
-  container_port       = var.port[*]
+  container_port       = var.container_port[*]
   ecr_image            = var.ecr_image
   subnet_ids           = module.vpc.public_subnets
   alb_target_group_arn = module.alb.target_group_arn

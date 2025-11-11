@@ -52,7 +52,7 @@ variable "desired_count" {
 
 }
 
-variable "port" {
+variable "container_port" {
   description = "The container port to expose"
   type        = number
 

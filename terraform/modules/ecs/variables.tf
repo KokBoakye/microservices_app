@@ -16,7 +16,7 @@ variable "container_memory" {
   type    = number
   default = 512
 }
-variable "container_port" { type = number }
+variable "container_port" { type = list(number) }
 variable "subnet_ids" { type = list(string) }
 variable "alb_target_group_arn" { type = string }
 variable "desired_count" {

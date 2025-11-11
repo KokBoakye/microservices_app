@@ -43,7 +43,7 @@ variable "memory" {
 
 variable "ecr_image" {
   description = "The ECR image URI for the ECS service"
-  type        = string
+  type        = list(string)
 
 }
 

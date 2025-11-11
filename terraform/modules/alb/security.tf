@@ -32,7 +32,7 @@ resource "aws_security_group" "app_lb_sg" {
 
 
 resource "aws_security_group" "user_service_sg" {
-  name        = "ecs-service-sg"
+  name        = "user-service-sg"
   description = "Security group for user service"
   vpc_id      = var.vpc_id
 
@@ -54,7 +54,7 @@ resource "aws_security_group" "user_service_sg" {
 }
 
 resource "aws_security_group" "order_service_sg" {
-  name        = "ecs-service-sg"
+  name        = "order-service-sg"
   description = "Security group for user service"
   vpc_id      = var.vpc_id
 
@@ -76,7 +76,7 @@ resource "aws_security_group" "order_service_sg" {
 }
 
 resource "aws_security_group" "api_gateway_sg" {
-  name        = "ecs-service-sg"
+  name        = "api-gateway-sg"
   description = "Security group for user service"
   vpc_id      = var.vpc_id
 

@@ -43,23 +43,23 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -var-file="dev.tfvars"
 
-      # - name: Terraform Apply
-      #   run: terraform apply -var-file="dev.tfvars" -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -var-file="dev.tfvars" -auto-approve
 
-      # - name: Login to Amazon ECR
-      #   uses: aws-actions/amazon-ecr-login@v1
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
 
-      # - name: Build and Push User Service Image to ECR
-      #   run: |
-      #     docker buildx build --platform linux/amd64 -t user-service ../user_service .
-      #     docker tag user-service ${{ secrets.ECR_REGISTRY }}/user-service:latest
-      #     docker push ${{ secrets.ECR_REGISTRY }}/user-service:latest
+      - name: Build and Push User Service Image to ECR
+        run: |
+          docker buildx build --platform linux/amd64 -t user-service ../user_service .
+          docker tag user-service ${{ secrets.ECR_REGISTRY }}/user-service:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/user-service:latest
 
 
-      # - name: Update ECS Service
-      #   run: |
+      - name: Update ECS Service
+        run: |
           
-      #     aws ecs update-service --cluster microservices-app --service user_service --force-new-deployment
+          aws ecs update-service --cluster microservices-app --service user_service --force-new-deployment
 
 
       - name: Terraform destroy

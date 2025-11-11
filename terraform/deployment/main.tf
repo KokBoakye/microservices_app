@@ -32,7 +32,6 @@ module "ecs" {
   container_port       = var.port
   ecr_image            = var.ecr_image
   subnet_ids           = module.vpc.public_subnets
-  security_groups      = [module.alb.ecs_security_group_id]
   alb_target_group_arn = module.alb.target_group_arn
   aws_region           = var.aws_region
   cpu                  = var.cpu
@@ -42,7 +41,6 @@ module "ecs" {
   order_service_sg     = module.alb.order_service_sg_id
   api_gateway_sg       = module.alb.api_gateway_sg_id
   project_name         = var.project_name
-
 
 }
 

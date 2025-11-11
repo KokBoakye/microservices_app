@@ -18,7 +18,6 @@ variable "container_memory" {
 }
 variable "container_port" { type = number }
 variable "subnet_ids" { type = list(string) }
-variable "security_groups" { type = list(string) }
 variable "alb_target_group_arn" { type = string }
 variable "desired_count" {
   type    = number

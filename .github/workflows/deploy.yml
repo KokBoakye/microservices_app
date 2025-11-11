@@ -15,7 +15,7 @@ jobs:
 
     defaults:
         run:
-            working-directory: terraform
+            working-directory: terraform/deployment
         
 
     steps:
@@ -41,10 +41,10 @@ jobs:
         
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -var-file="dev.tfvars"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -var-file="dev.tfvars" -auto-approve
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
@@ -63,4 +63,4 @@ jobs:
 
 
       - name: Terraform destroy
-        run: terraform destroy -auto-approve
+        run: terraform destroy -var-file="dev.tfvars" -auto-approve

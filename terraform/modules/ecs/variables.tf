@@ -1,5 +1,5 @@
 variable "name" { type = list(string) }
-variable "ecr_image" { type = string }
+variable "ecr_image" { type = list(string) }
 variable "cpu" {
   type    = string
   default = "256"

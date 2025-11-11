@@ -51,10 +51,22 @@ jobs:
 
       - name: Build and Push User Service Image to ECR
         run: |
-          docker buildx build --platform linux/amd64 -t user-service ../user_service .
+          docker buildx build --platform linux/amd64 -t user-service ../../user_service 
           docker tag user-service ${{ secrets.ECR_REGISTRY }}/user-service:latest
           docker push ${{ secrets.ECR_REGISTRY }}/user-service:latest
 
+
+      - name: Build and Push Order Service Image to ECR
+        run: |
+          docker buildx build --platform linux/amd64 -t order-service ../../order_service 
+          docker tag user-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
+
+      - name: Build and Push Api Gateway Image to ECR
+        run: |
+          docker buildx build --platform linux/amd64 -t api-gateway ../../api_gateway 
+          docker tag user-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
 
       - name: Update ECS Service
         run: |

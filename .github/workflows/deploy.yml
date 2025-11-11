@@ -1,0 +1,66 @@
+name: Deploy Microservices Application
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+        run:
+            working-directory: terraform
+        
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-north-1
+
+      - name: Set up terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: '1.5.0'
+
+    
+      - name: Terraform Init
+        run: terraform init
+        
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and Push User Service Image to ECR
+        run: |
+          docker buildx build --platform linux/amd64 -t user-service ../user_service .
+          docker tag user-service ${{ secrets.ECR_REGISTRY }}/user-service:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/user-service:latest
+
+
+      - name: Update ECS Service
+        run: |
+          
+          aws ecs update-service --cluster microservices-app --service user_service --force-new-deployment
+
+
+      - name: Terraform destroy
+        run: terraform destroy -auto-approve

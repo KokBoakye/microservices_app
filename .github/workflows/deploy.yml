@@ -71,7 +71,9 @@ jobs:
       - name: Update ECS Service
         run: |
           
-          aws ecs update-service --cluster microservices-app --service user_service --force-new-deployment
+          aws ecs update-service --cluster microservices-app --service user-service --force-new-deployment
+          aws ecs update-service --cluster microservices-app --service order-service --force-new-deployment
+          aws ecs update-service --cluster microservices-app --service api-gateway --force-new-deployment
 
 
       - name: Terraform destroy

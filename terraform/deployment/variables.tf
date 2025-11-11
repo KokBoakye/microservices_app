@@ -54,7 +54,7 @@ variable "desired_count" {
 
 variable "container_port" {
   description = "The container port to expose"
-  type        = number
+  type        = list(number)
 
 }
 

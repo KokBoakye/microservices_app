@@ -6,6 +6,10 @@ app = FastAPI()
 USER_SERVICE = "http://user-service.internal.local"
 ORDER_SERVICE = "http://order-service.internal.local"
 
+@app.get("/")
+def root():
+    return {"status": "API Gateway running"}
+
 @app.get("/users")
 def list_users():
     return requests.get(f"{USER_SERVICE}/users").json()

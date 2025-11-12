@@ -40,7 +40,7 @@ resource "aws_security_group" "user_service_sg" {
     from_port       = 8001
     to_port         = 8001
     protocol        = "tcp"
-    security_groups = [aws_security_group.app_lb_sg.id]
+    security_groups = [aws_security_group.api_gateway_sg.id]
   }
 
   egress {
@@ -55,14 +55,14 @@ resource "aws_security_group" "user_service_sg" {
 
 resource "aws_security_group" "order_service_sg" {
   name        = "order-service-sg"
-  description = "Security group for user service"
+  description = "Security group for order service"
   vpc_id      = var.vpc_id
 
   ingress {
     from_port       = 8002
     to_port         = 8002
     protocol        = "tcp"
-    security_groups = [aws_security_group.app_lb_sg.id]
+    security_groups = [aws_security_group.api_gateway_sg.id]
   }
 
   egress {
@@ -77,7 +77,7 @@ resource "aws_security_group" "order_service_sg" {
 
 resource "aws_security_group" "api_gateway_sg" {
   name        = "api-gateway-sg"
-  description = "Security group for user service"
+  description = "Security group for api gateway"
   vpc_id      = var.vpc_id
 
   ingress {

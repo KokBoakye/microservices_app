@@ -41,6 +41,7 @@ module "ecs" {
   order_service_sg     = module.alb.order_service_sg_id
   api_gateway_sg       = module.alb.api_gateway_sg_id
   project_name         = var.project_name
+  vpc_id               = module.vpc.vpc_id
 
 }
 

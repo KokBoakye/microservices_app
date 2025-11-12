@@ -3,8 +3,8 @@ import requests
 
 app = FastAPI()
 
-USER_SERVICE = "http://localhost:8001"
-ORDER_SERVICE = "http://localhost:8002"
+USER_SERVICE = "http://user-service.internal.local"
+ORDER_SERVICE = "http://order-service.internal.local"
 
 @app.get("/users")
 def list_users():

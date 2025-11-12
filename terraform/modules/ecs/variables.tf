@@ -44,3 +44,8 @@ variable "project_name" {
   description = "The name of the project"
   type        = string
 }
+
+variable "vpc_id" {
+  description = "The VPC ID where the ECS services will be deployed"
+  type        = string
+}

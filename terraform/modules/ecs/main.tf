@@ -44,6 +44,10 @@ resource "aws_ecs_service" "user_service_ecs_service" {
     assign_public_ip = true
   }
 
+  service_registries {
+    registry_arn = aws_service_discovery_service.user_service.arn
+  }
+
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.name[0]
@@ -97,6 +101,10 @@ resource "aws_ecs_service" "order_service_ecs_service" {
     assign_public_ip = true
   }
 
+  service_registries {
+    registry_arn = aws_service_discovery_service.order_service.arn
+  }
+
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.name[1]
@@ -145,6 +153,10 @@ resource "aws_ecs_service" "api_gateway_ecs_service" {
     assign_public_ip = true
   }
 
+  service_registries {
+    registry_arn = aws_service_discovery_service.api_gateway.arn
+  }
+
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.name[2]
@@ -173,4 +185,56 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_service_discovery_private_dns_namespace" "microservices" {
+  name        = "internal.local"
+  description = "Private namespace for microservices"
+  vpc         = var.vpc_id
+}
+
+
+resource "aws_service_discovery_service" "user_service" {
+  name = "user-service"
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.microservices.id
+    dns_records {
+      type = "A"
+      ttl  = 10
+    }
+    routing_policy = "MULTIVALUE"
+  }
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+}
+
+resource "aws_service_discovery_service" "order_service" {
+  name = "order-service"
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.microservices.id
+    dns_records {
+      type = "A"
+      ttl  = 10
+    }
+    routing_policy = "MULTIVALUE"
+  }
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+}
+
+resource "aws_service_discovery_service" "api_gateway" {
+  name = "api-gateway"
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.microservices.id
+    dns_records {
+      type = "A"
+      ttl  = 10
+    }
+    routing_policy = "MULTIVALUE"
+  }
+  health_check_custom_config {
+    failure_threshold = 1
+  }
 }

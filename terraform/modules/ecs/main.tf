@@ -15,9 +15,9 @@ resource "aws_ecs_task_definition" "user_service_task_definition" {
   container_definitions = jsonencode([
     {
       name         = var.name[0]
-      image        = var.ecr_image[1]
+      image        = var.ecr_image[0]
       essential    = true
-      portMappings = [{ containerPort = var.container_port[1] }]
+      portMappings = [{ containerPort = var.container_port[0] }]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
@@ -51,7 +51,7 @@ resource "aws_ecs_service" "user_service_ecs_service" {
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.name[0]
-    container_port   = var.container_port[1]
+    container_port   = var.container_port[0]
   }
 }
 
@@ -72,9 +72,9 @@ resource "aws_ecs_task_definition" "order_service_task_definition" {
   container_definitions = jsonencode([
     {
       name         = var.name[1]
-      image        = var.ecr_image[2]
+      image        = var.ecr_image[1]
       essential    = true
-      portMappings = [{ containerPort = var.container_port[2] }]
+      portMappings = [{ containerPort = var.container_port[1] }]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
@@ -108,7 +108,7 @@ resource "aws_ecs_service" "order_service_ecs_service" {
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.name[1]
-    container_port   = var.container_port[2]
+    container_port   = var.container_port[1]
   }
 }
 
@@ -124,9 +124,9 @@ resource "aws_ecs_task_definition" "api_gateway_task_definition" {
   container_definitions = jsonencode([
     {
       name         = var.name[2]
-      image        = var.ecr_image[0]
+      image        = var.ecr_image[2]
       essential    = true
-      portMappings = [{ containerPort = var.container_port[0] }]
+      portMappings = [{ containerPort = var.container_port[2] }]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
@@ -160,7 +160,7 @@ resource "aws_ecs_service" "api_gateway_ecs_service" {
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.name[2]
-    container_port   = var.container_port[0]
+    container_port   = var.container_port[2]
   }
 }
 

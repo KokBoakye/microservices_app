@@ -45,7 +45,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_eip" "nat_eip" {
-  count = length(aws_subnet.private)
+  count = length(aws_subnet.public)
 
   tags = {
     Name = "nat-eip"
@@ -53,6 +53,7 @@ resource "aws_eip" "nat_eip" {
 }
 
 resource "aws_nat_gateway" "aws_nat_gateway" {
+  count         = length(aws_subnet.public)
   allocation_id = aws_eip.nat_eip[count.index].id
   subnet_id     = aws_subnet.public[count.index].id
   tags = {
@@ -65,8 +66,8 @@ resource "aws_route_table" "private" {
   count  = length(aws_subnet.private)
   vpc_id = aws_vpc.vpc.id
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.aws_nat_gateway[count.index].id
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.aws_nat_gateway[count.index].id
   }
   tags = {
     Name = "private-rt"

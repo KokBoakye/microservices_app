@@ -204,9 +204,7 @@ resource "aws_service_discovery_service" "user_service" {
     }
     routing_policy = "MULTIVALUE"
   }
-  health_check_custom_config {
-    failure_threshold = 1
-  }
+
 }
 
 resource "aws_service_discovery_service" "order_service" {
@@ -219,9 +217,7 @@ resource "aws_service_discovery_service" "order_service" {
     }
     routing_policy = "MULTIVALUE"
   }
-  health_check_custom_config {
-    failure_threshold = 1
-  }
+
 }
 
 resource "aws_service_discovery_service" "api_gateway" {
@@ -234,7 +230,5 @@ resource "aws_service_discovery_service" "api_gateway" {
     }
     routing_policy = "MULTIVALUE"
   }
-  health_check_custom_config {
-    failure_threshold = 1
-  }
+
 }

@@ -1,69 +1,73 @@
-name: Deploy Microservices Application
+# name: Deploy Microservices Application
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'terraform/deployment/order_service/**'
+#       - '.github/workflows/order_service.yml'
+#       - 'order_service/**'
 
-permissions:
-  contents: read
-  id-token: write
+# permissions:
+#   contents: read
+#   id-token: write
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    defaults:
-        run:
-            working-directory: terraform/deployment
+#     defaults:
+#         run:
+#             working-directory: terraform/deployment/order_service
         
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
 
       
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: eu-north-1
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v2
+#         with:
+#           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+#           aws-region: eu-north-1
 
-      - name: Set up terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: '1.5.0'
+#       - name: Set up terraform
+#         uses: hashicorp/setup-terraform@v1
+#         with:
+#           terraform_version: '1.5.0'
 
     
-      - name: Terraform Init
-        run: terraform init
+#       - name: Terraform Init
+#         run: terraform init
         
 
-      - name: Terraform Plan
-        run: terraform plan -var-file="dev.tfvars"
+#       - name: Terraform Plan
+#         run: terraform plan -var-file="dev.tfvars"
 
-      - name: Terraform Apply
-        run: terraform apply -var-file="dev.tfvars" -auto-approve
+#       - name: Terraform Apply
+#         run: terraform apply -var-file="dev.tfvars" -auto-approve
 
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v1
-
-      
-
-      - name: Build and Push Order Service Image to ECR
-        run: |
-          docker buildx build --platform linux/amd64 -t order-service ../../order_service 
-          docker tag order-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
+#       - name: Login to Amazon ECR
+#         uses: aws-actions/amazon-ecr-login@v1
 
       
 
-      - name: Update ECS Service
-        run: |          
-          aws ecs update-service --cluster microservices-app --service order-service --force-new-deployment
+#       - name: Build and Push Order Service Image to ECR
+#         run: |
+#           docker buildx build --platform linux/amd64 -t order-service ../../order_service 
+#           docker tag order-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
+#           docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
+
+      
+
+#       - name: Update ECS Service
+#         run: |          
+#           aws ecs update-service --cluster microservices-app --service order-service --force-new-deployment
           
 
 
-      # - name: Terraform destroy
-      #   run: terraform destroy -var-file="dev.tfvars" -auto-approve
+#       # - name: Terraform destroy
+#       #   run: terraform destroy -var-file="dev.tfvars" -auto-approve

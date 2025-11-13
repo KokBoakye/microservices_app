@@ -57,7 +57,7 @@ jobs:
 
       - name: Build and Push Order Service Image to ECR
         run: |
-          docker buildx build --platform linux/amd64 -t order-service ../../order_service 
+          docker buildx build --platform linux/amd64 -t order-service ../../../order_service 
           docker tag order-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
           docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
 

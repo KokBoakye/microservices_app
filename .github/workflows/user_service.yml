@@ -55,7 +55,7 @@ jobs:
 
       - name: Build and Push User Service Image to ECR
         run: |
-          docker buildx build --platform linux/amd64 -t user-service ../../user_service 
+          docker buildx build --platform linux/amd64 -t user-service ../../../user_service 
           docker tag user-service ${{ secrets.ECR_REGISTRY }}/user-service:latest
           docker push ${{ secrets.ECR_REGISTRY }}/user-service:latest
 

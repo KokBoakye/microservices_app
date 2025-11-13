@@ -47,23 +47,23 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -var-file="dev.tfvars"
 
-      # - name: Terraform Apply
-      #   run: terraform apply -var-file="dev.tfvars" -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -var-file="dev.tfvars" -auto-approve
 
-      # - name: Login to Amazon ECR
-      #   uses: aws-actions/amazon-ecr-login@v1
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
 
       
 
-      # - name: Build and Push Api Gateway Image to ECR
-      #   run: |
-      #     docker buildx build --platform linux/amd64 -t api-gateway ../../api_gateway 
-      #     docker tag api-gateway ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
-      #     docker push ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
+      - name: Build and Push Api Gateway Image to ECR
+        run: |
+          docker buildx build --platform linux/amd64 -t api-gateway ../../api_gateway 
+          docker tag api-gateway ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
 
-      # - name: Update ECS Service
-      #   run: |                
-      #     aws ecs update-service --cluster microservices-app --service api-gateway --force-new-deployment
+      - name: Update ECS Service
+        run: |                
+          aws ecs update-service --cluster microservices-app --service api-gateway --force-new-deployment
 
 
       # # - name: Terraform destroy

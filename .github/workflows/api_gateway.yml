@@ -57,7 +57,7 @@ jobs:
 
       - name: Build and Push Api Gateway Image to ECR
         run: |
-          docker buildx build --platform linux/amd64 -t api-gateway ../../api_gateway 
+          docker buildx build --platform linux/amd64 -t api-gateway ../../../api_gateway 
           docker tag api-gateway ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
           docker push ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
 

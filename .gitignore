@@ -3,3 +3,20 @@
 *.tfstate.backup
 .terraform.lock.hcl
 crash.log
+*.tfvars
+# Byte-compiled files
+--pycache.../
+*-py[cod]
+# Virtual Environments
+venv/
+*. venv
+• env
+# IDE related (e.g., PyCharm)
+• idea/
+# OS generated files
+• DS_Store
+Thumbs .db
+• Copy code
+# Log and databases
+*.1og
+*. sqlite

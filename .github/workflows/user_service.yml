@@ -55,24 +55,13 @@ jobs:
           docker tag user-service ${{ secrets.ECR_REGISTRY }}/user-service:latest
           docker push ${{ secrets.ECR_REGISTRY }}/user-service:latest
 
-      - name: Build and Push Order Service Image to ECR
-        run: |
-          docker buildx build --platform linux/amd64 -t order-service ../../order_service 
-          docker tag order-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
-
-      - name: Build and Push Api Gateway Image to ECR
-        run: |
-          docker buildx build --platform linux/amd64 -t api-gateway ../../api_gateway 
-          docker tag api-gateway ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
+      
 
       - name: Update ECS Service
         run: |
           
           aws ecs update-service --cluster microservices-app --service user-service --force-new-deployment
-          aws ecs update-service --cluster microservices-app --service order-service --force-new-deployment
-          aws ecs update-service --cluster microservices-app --service api-gateway --force-new-deployment
+          
 
 
       # - name: Terraform destroy

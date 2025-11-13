@@ -3,7 +3,7 @@
 *.tfstate.backup
 .terraform.lock.hcl
 crash.log
-*.tfvars
+# *.tfvars
 # Byte-compiled files
 --pycache.../
 *-py[cod]

@@ -66,5 +66,6 @@ jobs:
           aws ecs update-service --cluster microservices-app --service api-gateway --force-new-deployment
 
 
+          
       # # - name: Terraform destroy
       # #   run: terraform destroy -var-file="dev.tfvars" -auto-approve

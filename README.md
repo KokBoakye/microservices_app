@@ -32,39 +32,68 @@ It includes three core FastAPI services:
 
 ## 🏗️ Repository Structure
 
-microservices/
-├── api_gateway/ # FastAPI API Gateway service
-│ ├── app.py
-│ ├── requirements.txt
-│ ├── Dockerfile
-│ └── venv/ # Local virtual environment (ignored in build)
-│
-├── user_service/ # FastAPI User Service
-│ ├── app.py
-│ ├── database.py
-│ ├── models.py
-│ ├── requirements.txt
-│ └── Dockerfile
-│
-├── order_service/ # FastAPI Order Service
-│ ├── app.py
-│ ├── database.py
-│ ├── models.py
-│ ├── requirements.txt
-│ └── Dockerfile
-│
-└── terraform/ # Infrastructure as Code
-├── deployment/ # Environment-specific configs
-│ ├── main.tf
-│ ├── provider.tf
-│ ├── variables.tf
-│ ├── dev.tfvars
-│ └── outputs.tf
-└── modules/
-├── alb/
-├── ecr/
-├── ecs/
-└── vpc/
+├── README.md
+├── api_gateway
+│   ├── Dockerfile
+│   ├── app.py
+│   └── requirements.txt
+├── order_service
+│   ├── Dockerfile
+│   ├── app.py
+│   ├── database.py
+│   ├── models.py
+│   └── requirements.txt
+├── user_service
+│   ├── Dockerfile
+│   ├── app.py
+│   ├── database.py
+│   ├── models.py
+│   └── requirements.txt
+└── terraform
+    ├── deployment
+    │   ├── api_gateway
+    │   │   ├── backend.tf
+    │   │   ├── dev.tfvars
+    │   │   ├── main.tf
+    │   │   ├── outputs.tf
+    │   │   └── variables.tf
+    │   ├── order_service
+    │   │   ├── backend.tf
+    │   │   ├── dev.tfvars
+    │   │   ├── main.tf
+    │   │   ├── outputs.tf
+    │   │   └── variables.tf
+    │   ├── provider.tf
+    │   └── user_service
+    │       ├── backend.tf
+    │       ├── dev.tfvars
+    │       ├── main.tf
+    │       ├── outputs.tf
+    │       └── variables.tf
+    └── shared_modules
+        ├── alb
+        │   ├── main.tf
+        │   ├── outputs.tf
+        │   ├── security.tf
+        │   └── variables.tf
+        ├── backend.tf
+        ├── dev.tfvars
+        ├── ecr
+        │   ├── main.tf
+        │   ├── outputs.tf
+        │   └── variables.tf
+        ├── ecs
+        │   ├── main.tf
+        │   ├── outputs.tf
+        │   └── variables.tf
+        ├── main.tf
+        ├── outputs.tf
+        ├── provider.tf
+        ├── variables.tf
+        └── vpc
+            ├── main.tf
+            ├── outputs.tf
+            └── variables.tf
 
 ---
 

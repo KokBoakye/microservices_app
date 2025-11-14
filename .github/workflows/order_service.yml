@@ -47,27 +47,27 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -var-file="dev.tfvars"
 
-      - name: Terraform Apply
-        run: terraform apply -var-file="dev.tfvars" -auto-approve
+      # - name: Terraform Apply
+      #   run: terraform apply -var-file="dev.tfvars" -auto-approve
 
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v1
-
-      
-
-      - name: Build and Push Order Service Image to ECR
-        run: |
-          docker buildx build --platform linux/amd64 -t order-service ../../../order_service 
-          docker tag order-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
-          docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
+      # - name: Login to Amazon ECR
+      #   uses: aws-actions/amazon-ecr-login@v1
 
       
 
-      - name: Update ECS Service
-        run: |          
-          aws ecs update-service --cluster microservices-app --service order-service --force-new-deployment
+      # - name: Build and Push Order Service Image to ECR
+      #   run: |
+      #     docker buildx build --platform linux/amd64 -t order-service ../../../order_service 
+      #     docker tag order-service ${{ secrets.ECR_REGISTRY }}/order-service:latest
+      #     docker push ${{ secrets.ECR_REGISTRY }}/order-service:latest
+
+      
+
+      # - name: Update ECS Service
+      #   run: |          
+      #     aws ecs update-service --cluster microservices-app --service order-service --force-new-deployment
           
 
 
-#       # - name: Terraform destroy
-#       #   run: terraform destroy -var-file="dev.tfvars" -auto-approve
+      - name: Terraform destroy
+        run: terraform destroy -var-file="dev.tfvars" -auto-approve

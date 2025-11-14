@@ -52,8 +52,23 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -var-file="dev.tfvars" -auto-approve
 
+      - name: Run Checkov (Terraform)
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: ./
+          output_format: json
+          output_file_path: checkov_results.json
+          soft_fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       
-      
+      - name: Upload security reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            checkov_results.json
 
     
 

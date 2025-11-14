@@ -65,7 +65,23 @@ jobs:
       #   run: |                
       #     aws ecs update-service --cluster microservices-app --service api-gateway --force-new-deployment
 
+      # - name: Trivy Scan
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: ${{ secrets.ECR_REGISTRY }}/api-gateway:latest
+      #     format: json
+      #     output: 'trivy-report-api-gateway.json'
+      #     exit-code: 0
+      #     severity: 'CRITICAL,HIGH'
+      #     ignore-unfixed: true
 
+      # - name: Upload security reports
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: security-reports
+      #     path: |
+      #       trivy-report-api-gateway.json
+            
 
       - name: Terraform destroy
         run: terraform destroy -var-file="dev.tfvars" -auto-approve
